@@ -381,6 +381,131 @@
       justify-content: space-between;
     }
 
+    /* ── EXAM PRACTICE BLOCKS ── */
+    .exam-block {
+      border: 1.5px solid var(--rule);
+      margin: 32px 0;
+      background: white;
+    }
+    .exam-q-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--ink);
+      padding: 8px 18px;
+    }
+    .exam-tag {
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--paper);
+    }
+    .exam-marks {
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.15em;
+      color: #f0c060;
+    }
+    .exam-question {
+      padding: 16px 20px;
+      background: var(--sidebar);
+      border-bottom: 1px solid var(--rule);
+      font-size: 13.5px;
+    }
+    .exam-question p, .exam-question li { font-size: 13.5px; }
+    .exam-answer {
+      padding: 18px 20px;
+      position: relative;
+    }
+    .ans-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: white;
+      background: var(--accent);
+      display: inline-block;
+      padding: 2px 10px;
+      margin-bottom: 14px;
+    }
+    .exam-answer h4 {
+      font-family: 'Syne', sans-serif;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-top: 18px;
+      margin-bottom: 8px;
+      padding-left: 0;
+      border-left: none;
+    }
+    .exam-answer p, .exam-answer li { font-size: 13px; }
+    .answer-highlight {
+      background: var(--highlight);
+      border: 1px solid #e5c97e;
+      border-left: 4px solid var(--accent);
+      padding: 12px 16px;
+      margin: 16px 0 4px;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+    /* ── PIXEL GRIDS ── */
+    .pixel-grid-wrap {
+      margin: 14px 0;
+      overflow-x: auto;
+    }
+    .pixel-grid {
+      border-collapse: collapse;
+      font-family: 'DM Mono', monospace;
+      font-size: 13px;
+    }
+    .pixel-grid td, .pixel-grid th {
+      width: 52px;
+      height: 42px;
+      text-align: center;
+      border: 1px solid var(--rule);
+      font-size: 12px;
+    }
+    .pixel-grid th {
+      background: var(--code-bg);
+      font-family: 'Syne', sans-serif;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+    .pixel-grid .valid     { background: #e8f4e8; color: #2a6a2a; font-weight: 600; }
+    .pixel-grid .start     { background: #1a5fa8; color: white; font-weight: 700; }
+    .pixel-grid .end       { background: #c8401a; color: white; font-weight: 700; }
+    .pixel-grid .path-start{ background: #1a5fa8; color: white; font-weight: 700; }
+    .pixel-grid .path-step { background: #2a9a4a; color: white; font-weight: 700; }
+    .pixel-grid .path-end  { background: #c8401a; color: white; font-weight: 700; }
+    .pixel-grid .val1      { background: #f0f8f0; color: #1a5a1a; font-weight: 700; }
+    .pixel-grid .val0      { background: #faf8f6; color: #aaa; }
+    .dist-table td         { font-weight: 600; }
+    .grid-legend {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 6px;
+      letter-spacing: 0.05em;
+    }
+    .leg-valid, .leg-start, .leg-end, .leg-path {
+      display: inline-block;
+      width: 14px; height: 14px;
+      vertical-align: middle;
+      margin-right: 3px;
+      border: 1px solid var(--rule);
+    }
+    .leg-valid { background: #e8f4e8; }
+    .leg-start { background: #1a5fa8; }
+    .leg-end   { background: #c8401a; }
+    .leg-path  { background: #2a9a4a; }
+
     /* ── SCROLL FADE-IN ── */
     .fade-in {
       opacity: 0;
@@ -601,6 +726,297 @@
       <li>Panoptic segmentation for complete scene understanding in self-driving cars.</li>
       <li>Satellite imagery: extract roads, buildings, water bodies, and land cover at scale.</li>
     </ul>
+  </section>
+
+  <!-- SECTION 8: EXAM PRACTICE -->
+  <section class="fade-in">
+    <h2><span class="section-num">08</span>Exam Practice &amp; Solved Questions</h2>
+    <p style="color:var(--muted); font-size:13px;">Selected questions from UIU CSE 4883 Finals — Fall 2025, Summer 2025, Spring 2025. Solutions worked out step by step.</p>
+
+    <!-- ───── Q1: Segmentation Application Choice ───── -->
+    <div class="exam-block">
+      <div class="exam-q-header">
+        <span class="exam-tag">Fall 2025 · Q1(a)</span>
+        <span class="exam-marks">5 marks</span>
+      </div>
+      <div class="exam-question">
+        <p><b>Scenario:</b> An image-analysis system for two applications — (i) land cover classification from satellite images, (ii) brain MRI tumor segmentation.</p>
+        <ul>
+          <li><b>App 1 — Satellite:</b> Large homogeneous regions, smooth boundaries, region-oriented objects, minor imprecision acceptable.</li>
+          <li><b>App 2 — MRI:</b> Variable tumor shapes, intensity overlap with healthy tissue, irregular/ambiguous boundaries, high inter-patient variability, pixel-level accuracy critical.</li>
+        </ul>
+      </div>
+      <div class="exam-answer">
+        <div class="ans-label">Answer</div>
+
+        <h4>Part (i) — Land Cover: Region-based Segmentation</h4>
+        <p><b>Best choice: Region-based segmentation</b> (specifically region growing or the Watershed algorithm).</p>
+        <p><b>Justification:</b></p>
+        <ul>
+          <li>Satellite images have large, spatially coherent areas with uniform color/texture (fields, water, forest) — exactly what region growing excels at: it expands a seed by absorbing similar neighbors until a homogeneous region is formed.</li>
+          <li>Boundaries are smooth and continuous, so region growing will not fragment regions the way edge-based methods might on noisy satellite data.</li>
+          <li>Objects are region-oriented (not thin lines), meaning clustering or thresholding of the whole image is also viable, but region-based methods give the added benefit of producing spatially contiguous regions aligned with real geography.</li>
+          <li>Minor boundary imprecision is tolerable, which forgives the slight inaccuracies of region growing at mixed-land-cover borders.</li>
+        </ul>
+
+        <h4>Part (ii) — Brain MRI Tumor: Deep Learning Segmentation (CNN Encoder–Decoder)</h4>
+        <p><b>Why traditional methods fail:</b></p>
+        <ul>
+          <li><b>Thresholding</b> fails because tumor intensity overlaps with healthy tissue — no single threshold cleanly separates them.</li>
+          <li><b>Region growing</b> fails because tumors lack spatial homogeneity and seed selection is unreliable with ambiguous, irregular boundaries.</li>
+          <li><b>Edge detection</b> fails because boundaries are ambiguous and noisy — gradient-based filters cannot reliably locate tumor borders.</li>
+          <li><b>Clustering (K-means)</b> fails because handcrafted feature spaces cannot capture the high inter-patient variability in tumor appearance.</li>
+        </ul>
+        <p><b>Best choice: Deep learning — CNN Encoder–Decoder (e.g., U-Net).</b></p>
+        <p><b>Justification:</b></p>
+        <ul>
+          <li>U-Net learns hierarchical spatial features from large datasets, automatically adapting to shape, size, and intensity variations across patients.</li>
+          <li>Skip connections between encoder and decoder preserve fine spatial details, enabling precise pixel-level boundary delineation even at irregular borders.</li>
+          <li>Trained on labelled MRI data, the model learns the statistical patterns of tumors vs. healthy tissue beyond what any hand-crafted rule can capture.</li>
+          <li>Outputs a per-pixel probability map, directly addressing the need for pixel-level accuracy critical for clinical decisions.</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- ───── Q1(b): Identify segmentation type ───── -->
+    <div class="exam-block">
+      <div class="exam-q-header">
+        <span class="exam-tag">Fall 2025 · Q1(b)</span>
+        <span class="exam-marks">3 marks</span>
+      </div>
+      <div class="exam-question">
+        <p>Identify the most appropriate segmentation type for each scenario:</p>
+        <ul>
+          <li>(i) Satellite image — label every pixel as road / vegetation / water / building. Individual instances need not be separated.</li>
+          <li>(ii) Parking lot — separate and count each individual car as a distinct object.</li>
+          <li>(iii) Street scene — roads &amp; sidewalks labeled by category; cars &amp; pedestrians identified and separated individually.</li>
+        </ul>
+      </div>
+      <div class="exam-answer">
+        <div class="ans-label">Answer</div>
+        <table class="cases-table">
+          <thead><tr><th>#</th><th>Scenario</th><th>Segmentation Type</th><th>Reason</th></tr></thead>
+          <tbody>
+            <tr><td>(i)</td><td>Satellite pixel labeling</td><td><b>Semantic Segmentation</b></td><td>Only the class per pixel matters; no need to separate individual roads or buildings from each other.</td></tr>
+            <tr><td>(ii)</td><td>Parking lot — count cars</td><td><b>Instance Segmentation</b></td><td>Each car must be a distinct object mask so they can be individually counted, even when touching.</td></tr>
+            <tr><td>(iii)</td><td>Street scene</td><td><b>Panoptic Segmentation</b></td><td>Combines semantic (road, sidewalk labeled by class) and instance (each car/pedestrian as a separate, named instance).</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ───── Q2(b): m-path distance ───── -->
+    <div class="exam-block">
+      <div class="exam-q-header">
+        <span class="exam-tag">Fall 2025 · Q2(b)</span>
+        <span class="exam-marks">3 marks</span>
+      </div>
+      <div class="exam-question">
+        <p>Given the 5×5 image below with \(V = [45, 105]\), find the m-path distance \(D_m\) between pixels at <b>(1,2)</b> and <b>(5,4)</b>. Show all paths and highlight the shortest.</p>
+        <div class="pixel-grid-wrap">
+          <table class="pixel-grid" id="q2b-grid">
+            <tbody>
+              <tr><td class="">75</td><td class="valid start">55</td><td class="">35</td><td class="">125</td><td class="">110</td></tr>
+              <tr><td class="valid">72</td><td class="">195</td><td class="valid">85</td><td class="">25</td><td class="valid">103</td></tr>
+              <tr><td class="">130</td><td class="valid">65</td><td class="">150</td><td class="valid">95</td><td class="valid">100</td></tr>
+              <tr><td class="valid">102</td><td class="valid">99</td><td class="valid">70</td><td class="">120</td><td class="valid">99</td></tr>
+              <tr><td class="valid">55</td><td class="">30</td><td class="">44</td><td class="valid end">80</td><td class="">15</td></tr>
+            </tbody>
+          </table>
+          <p class="grid-legend"><span class="leg-valid"></span> Valid pixel (value ∈ [45,105]) &nbsp;·&nbsp; <span class="leg-start"></span> Start (1,2) &nbsp;·&nbsp; <span class="leg-end"></span> End (5,4)</p>
+        </div>
+      </div>
+      <div class="exam-answer">
+        <div class="ans-label">Answer</div>
+
+        <h4>Step 1 — Mark valid pixels (V = [45, 105])</h4>
+        <p>A pixel is eligible for the m-path only if its value is in [45, 105].</p>
+        <table class="cases-table">
+          <thead><tr><th>Pixel (row,col)</th><th>Value</th><th>Valid?</th></tr></thead>
+          <tbody>
+            <tr><td>(1,1)</td><td>75</td><td>✓</td></tr>
+            <tr><td>(1,2)</td><td>55</td><td>✓ <b>START</b></td></tr>
+            <tr><td>(2,1)</td><td>72</td><td>✓</td></tr>
+            <tr><td>(2,3)</td><td>85</td><td>✓</td></tr>
+            <tr><td>(2,5)</td><td>103</td><td>✓</td></tr>
+            <tr><td>(3,2)</td><td>65</td><td>✓</td></tr>
+            <tr><td>(3,4)</td><td>95</td><td>✓</td></tr>
+            <tr><td>(3,5)</td><td>100</td><td>✓</td></tr>
+            <tr><td>(4,1)</td><td>102</td><td>✓</td></tr>
+            <tr><td>(4,2)</td><td>99</td><td>✓</td></tr>
+            <tr><td>(4,3)</td><td>70</td><td>✓</td></tr>
+            <tr><td>(4,5)</td><td>99</td><td>✓</td></tr>
+            <tr><td>(5,1)</td><td>55</td><td>✓</td></tr>
+            <tr><td>(5,4)</td><td>80</td><td>✓ <b>END</b></td></tr>
+          </tbody>
+        </table>
+
+        <h4>Step 2 — m-adjacency rule</h4>
+        <div class="def-box">
+          Two valid pixels \(p\) and \(q\) are <b>m-adjacent</b> if they are (a) 4-adjacent, OR (b) diagonally adjacent AND they share <em>no</em> common 4-adjacent neighbor that is also valid.
+        </div>
+
+        <h4>Step 3 — Find the shortest m-path</h4>
+        <p>Tracing step by step from (1,2):</p>
+        <table class="cases-table">
+          <thead><tr><th>Step</th><th>Move</th><th>Type</th><th>Diagonal check (common 4-adj valid?)</th><th>Allowed?</th></tr></thead>
+          <tbody>
+            <tr><td>1</td><td>(1,2) → (2,3)</td><td>Diagonal</td><td>Common 4-adj: (1,3)=35✗, (2,2)=195✗ → none valid</td><td>✓ Yes</td></tr>
+            <tr><td>2</td><td>(2,3) → (3,2)</td><td>Diagonal</td><td>Common 4-adj: (2,2)=195✗, (3,3)=150✗ → none valid</td><td>✓ Yes</td></tr>
+            <tr><td>3</td><td>(3,2) → (4,2)</td><td>4-adjacent</td><td>—</td><td>✓ Yes</td></tr>
+            <tr><td>4</td><td>(4,2) → (4,3)</td><td>4-adjacent</td><td>—</td><td>✓ Yes</td></tr>
+            <tr><td>5</td><td>(4,3) → (5,4)</td><td>Diagonal</td><td>Common 4-adj: (4,4)=120✗, (5,3)=44✗ → none valid</td><td>✓ Yes</td></tr>
+          </tbody>
+        </table>
+
+        <div class="answer-highlight">
+          <b>Shortest m-path:</b> (1,2) → (2,3) → (3,2) → (4,2) → (4,3) → (5,4)<br>
+          <b>Dm = 5</b>
+        </div>
+
+        <p>The path is shown highlighted in green on the grid above.</p>
+        <div class="pixel-grid-wrap">
+          <table class="pixel-grid">
+            <tbody>
+              <tr><td>75</td><td class="path-start">55</td><td>35</td><td>125</td><td>110</td></tr>
+              <tr><td>72</td><td>195</td><td class="path-step">85</td><td>25</td><td>103</td></tr>
+              <tr><td>130</td><td class="path-step">65</td><td>150</td><td>95</td><td>100</td></tr>
+              <tr><td>102</td><td class="path-step">99</td><td class="path-step">70</td><td>120</td><td>99</td></tr>
+              <tr><td>55</td><td>30</td><td>44</td><td class="path-end">80</td><td>15</td></tr>
+            </tbody>
+          </table>
+          <p class="grid-legend"><span class="leg-start"></span> Start &nbsp;·&nbsp; <span class="leg-path"></span> Path &nbsp;·&nbsp; <span class="leg-end"></span> End</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ───── Summer 2025 Q1: Bottle Recycling Segmentation ───── -->
+    <div class="exam-block">
+      <div class="exam-q-header">
+        <span class="exam-tag">Summer 2025 · Q1</span>
+        <span class="exam-marks">4 marks</span>
+      </div>
+      <div class="exam-question">
+        <p>An automated inspection system for a bottle recycling plant must:</p>
+        <ul>
+          <li>(a) Detect and count each individual bottle — even overlapping/partially occluded ones — and identify damaged ones.</li>
+          <li>(b) Differentiate between materials: plastic bottles, glass shards, metal caps, and the conveyor belt — to filter non-recyclables and monitor debris.</li>
+        </ul>
+        <p>Identify which type(s) of segmentation are necessary.</p>
+      </div>
+      <div class="exam-answer">
+        <div class="ans-label">Answer</div>
+        <table class="cases-table">
+          <thead><tr><th>Goal</th><th>Segmentation Type</th><th>Justification</th></tr></thead>
+          <tbody>
+            <tr>
+              <td>Detect &amp; count individual bottles (overlapping/occluded), identify damaged ones</td>
+              <td><b>Instance Segmentation</b></td>
+              <td>Each bottle must receive its own unique mask so it can be individually counted and its shape inspected for damage. Semantic segmentation would merge overlapping bottles into one blob; instance segmentation keeps them as separate objects.</td>
+            </tr>
+            <tr>
+              <td>Differentiate materials: plastic, glass, metal, belt</td>
+              <td><b>Semantic Segmentation</b></td>
+              <td>The system needs to classify every pixel into a material category. Individual pieces of glass or metal do not need to be counted separately — only their material class matters. Semantic segmentation assigns a class label to each pixel, enabling filtering of non-recyclables and flagging of dirty regions.</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="answer-highlight">
+          <b>Combined requirement: Panoptic Segmentation</b><br>
+          Panoptic segmentation unifies both — it assigns each pixel a class label (semantic goal) while also separating individual object instances (instance goal). This single framework satisfies both objectives of the recycling system.
+        </div>
+      </div>
+    </div>
+
+    <!-- ───── Summer 2025 Q5a: 4/8/m-paths ───── -->
+    <div class="exam-block">
+      <div class="exam-q-header">
+        <span class="exam-tag">Summer 2025 · Q5(a)</span>
+        <span class="exam-marks">3 marks</span>
+      </div>
+      <div class="exam-question">
+        <p>Find whether it is possible to reach the bottom-right pixel <b>(5,5)</b> from the top-left pixel <b>(1,1)</b> using 4-, 8-, or m-paths (only through pixels with value 1). Show the path.</p>
+        <div class="pixel-grid-wrap">
+          <table class="pixel-grid">
+            <tbody>
+              <tr><td class="val1">1</td><td class="val1">1</td><td class="val0">0</td><td class="val0">0</td><td class="val1">1</td></tr>
+              <tr><td class="val0">0</td><td class="val1">1</td><td class="val1">1</td><td class="val1">1</td><td class="val0">0</td></tr>
+              <tr><td class="val1">1</td><td class="val0">0</td><td class="val1">1</td><td class="val0">0</td><td class="val1">1</td></tr>
+              <tr><td class="val0">0</td><td class="val1">1</td><td class="val0">0</td><td class="val0">0</td><td class="val1">1</td></tr>
+              <tr><td class="val1">1</td><td class="val0">0</td><td class="val1">1</td><td class="val0">0</td><td class="val1">1</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="exam-answer">
+        <div class="ans-label">Answer</div>
+
+        <h4>4-path: NOT POSSIBLE</h4>
+        <p>4-paths use only horizontal/vertical moves through value-1 pixels. From (1,1) we can reach (1,2), then (2,2)→(2,3)→(2,4). From (2,4), the only 4-neighbors are (1,4)=0, (3,4)=0, (2,5)=0 — all zeros. Dead end. No 4-path exists to (5,5).</p>
+
+        <h4>8-path: POSSIBLE</h4>
+        <p>8-paths also allow diagonal moves. The path below uses diagonals to skip across zero-pixels:</p>
+        <div class="pixel-grid-wrap">
+          <table class="pixel-grid">
+            <tbody>
+              <tr><td class="path-start">1</td><td class="val1">1</td><td class="val0">0</td><td class="val0">0</td><td class="val1">1</td></tr>
+              <tr><td class="val0">0</td><td class="path-step">1</td><td class="path-step">1</td><td class="path-step">1</td><td class="val0">0</td></tr>
+              <tr><td class="val1">1</td><td class="val0">0</td><td class="val1">1</td><td class="val0">0</td><td class="path-step">1</td></tr>
+              <tr><td class="val0">0</td><td class="val1">1</td><td class="val0">0</td><td class="val0">0</td><td class="path-step">1</td></tr>
+              <tr><td class="val1">1</td><td class="val0">0</td><td class="val1">1</td><td class="val0">0</td><td class="path-end">1</td></tr>
+            </tbody>
+          </table>
+          <p class="grid-legend">8-path: (1,1) → (2,2) → (2,3) → (2,4) → (3,5) → (4,5) → (5,5)</p>
+        </div>
+
+        <h4>m-path: POSSIBLE</h4>
+        <p>m-adjacency allows a diagonal only if the two pixels share no common valid (value=1) 4-adjacent neighbor. Check each diagonal step:</p>
+        <table class="cases-table">
+          <thead><tr><th>Move</th><th>Common valid 4-adj neighbors?</th><th>Diagonal allowed?</th></tr></thead>
+          <tbody>
+            <tr><td>(1,1)→(2,2)</td><td>(1,2)=1 ✓ exists</td><td>✗ Blocked — use 4-path instead</td></tr>
+            <tr><td>(1,1)→(1,2) [4-adj], then (1,2)→(2,3) diagonal</td><td>(1,3)=0, (2,2)=1 ✓ exists</td><td>✗ Blocked</td></tr>
+            <tr><td>(1,2)→(2,2) [4-adj], (2,2)→(2,3) [4-adj], (2,3)→(2,4) [4-adj], (2,4)→(3,5) diagonal</td><td>(2,5)=0, (3,4)=0 → none valid</td><td>✓ Allowed</td></tr>
+            <tr><td>(3,5)→(4,5) [4-adj], (4,5)→(5,5) [4-adj]</td><td>4-adjacent moves</td><td>✓ Always allowed</td></tr>
+          </tbody>
+        </table>
+        <div class="answer-highlight">
+          <b>m-path:</b> (1,1) → (1,2) → (2,2) → (2,3) → (2,4) → (3,5) → (4,5) → (5,5) &nbsp;|&nbsp; Length = 7
+        </div>
+      </div>
+    </div>
+
+    <!-- ───── Summer 2025 Q5b: City-block distance matrix ───── -->
+    <div class="exam-block">
+      <div class="exam-q-header">
+        <span class="exam-tag">Summer 2025 · Q5(b)</span>
+        <span class="exam-marks">2 marks</span>
+      </div>
+      <div class="exam-question">
+        <p>Find the city-block distance \(D_4\) of all pixels from the pixel located at <b>(2,3)</b>. Show only the distance matrix.</p>
+      </div>
+      <div class="exam-answer">
+        <div class="ans-label">Answer</div>
+        <p>City-block distance: \(D_4\big((r_1,c_1),(r_2,c_2)\big) = |r_1-r_2| + |c_1-c_2|\). Reference pixel: (2,3).</p>
+        <div class="pixel-grid-wrap">
+          <table class="pixel-grid dist-table">
+            <thead><tr><th></th><th>c=1</th><th>c=2</th><th>c=3</th><th>c=4</th><th>c=5</th></tr></thead>
+            <tbody>
+              <tr><th>r=1</th><td>3</td><td>2</td><td>1</td><td>2</td><td>3</td></tr>
+              <tr><th>r=2</th><td>2</td><td>1</td><td class="path-start">0</td><td>1</td><td>2</td></tr>
+              <tr><th>r=3</th><td>3</td><td>2</td><td>1</td><td>2</td><td>3</td></tr>
+              <tr><th>r=4</th><td>4</td><td>3</td><td>2</td><td>3</td><td>4</td></tr>
+              <tr><th>r=5</th><td>5</td><td>4</td><td>3</td><td>4</td><td>5</td></tr>
+            </tbody>
+          </table>
+          <p class="grid-legend">Center pixel (2,3) shown with distance 0.</p>
+        </div>
+        <div class="answer-highlight">
+          Distance increases by 1 for each step away from (2,3) in any horizontal or vertical direction — forming a diamond-shaped contour pattern.
+        </div>
+      </div>
+    </div>
+
   </section>
 
   <!-- FOOTER -->

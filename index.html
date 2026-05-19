@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>DIP – Connectivity, Distance & Image Segmentation Notes</title>
+</head>
+<body>
+    <h1>Digital Path, Connectivity, Distance & Image Segmentation – Detailed Notes</h1>
+
+    <h2>1. Pixels, Adjacency and Paths</h2>
+    <p>
+        A digital image can be viewed as a grid of pixels, each pixel having integer coordinates \((x,y)\). [file:2]
+        How we define “neighbors” (adjacency) controls paths, connectivity, and regions in the image. [file:2]
+    </p>
+
+    <h3>1.1 Types of Adjacency</h3>
+    <ul>
+        <li>
+            <b>4-adjacency:</b> Two pixels are 4-adjacent if one can be reached from the other by moving
+            one step up, down, left, or right (no diagonal moves). [file:2]
+        </li>
+        <li>
+            <b>8-adjacency:</b> Two pixels are 8-adjacent if one is in any of the eight neighboring positions
+            around the other (includes diagonals as well as 4-adjacent positions). [file:2]
+        </li>
+        <li>
+            <b>m-adjacency:</b> A mixed definition that uses both 4- and diagonal neighbors but avoids
+            certain diagonal connections when there is a 4-connected path between pixels through intermediate pixels.
+            This is defined with respect to a set of allowed pixel values \(V\). [file:2]
+        </li>
+    </ul>
+
+    <h3>1.2 Digital Path</h3>
+    <p>
+        A <b>digital path</b> from a pixel \(p\) to a pixel \(q\) is a sequence of pixels
+        \((x_0,y_0), (x_1,y_1), \dots, (x_n,y_n)\) such that: [file:2]
+    </p>
+    <ul>
+        <li>\((x_0,y_0) = p\) and \((x_n,y_n) = q\).</li>
+        <li>Each consecutive pair \((x_i,y_i)\), \((x_{i-1},y_{i-1})\) is adjacent according to the chosen adjacency (4, 8 or m). [file:2]</li>
+        <li>The length of the path is the number of steps, i.e., \(n\).</li>
+        <li>If the path starts and ends at the same pixel, it is called a <b>closed path</b>. [file:2]</li>
+    </ul>
+
+    <h2>2. Connectivity, Connected Components, Regions and Boundaries</h2>
+    <p>
+        Let \(S\) be a subset of pixels in an image (for example, all pixels with value 1 in a binary image). [file:2]
+    </p>
+    <ul>
+        <li>
+            Pixels \(p\) and \(q\) in \(S\) are said to be <b>connected in S</b> if there exists a path between them
+            consisting only of pixels in \(S\). [file:2]
+        </li>
+        <li>
+            For any pixel \(p \in S\), the set of pixels in \(S\) that are connected to \(p\) forms a
+            <b>connected component</b> of \(S\). [file:2]
+        </li>
+    </ul>
+
+    <h3>2.1 Regions</h3>
+    <p>
+        A subset of pixels \(R\) in an image is called a <b>region</b> if \(R\) is a connected set under the chosen adjacency.
+        In a binary image, each connected component of foreground pixels (e.g., value 1) forms a region. [file:2]
+    </p>
+
+    <h3>2.2 Boundaries</h3>
+    <ul>
+        <li>
+            The <b>boundary</b> (also called border or contour) of a region \(R\) is the set of pixels in \(R\)
+            that have at least one neighbor not in \(R\). [file:2]
+        </li>
+        <li>
+            If \(R\) is the entire image, then its boundary is the set of pixels in the first and last rows
+            and columns of the image. [file:2]
+        </li>
+    </ul>
+
+    <h3>2.3 Foreground and Background</h3>
+    <p>
+        Suppose the image contains \(K\) disjoint regions \(R_k\), none of which touches the image border. Let
+        \(R_u\) be the union of all these regions. [file:2]
+    </p>
+    <ul>
+        <li>\(R_u\) is called the <b>foreground</b>.</li>
+        <li>The complement \(R_u^c\) (pixels not in \(R_u\)) is called the <b>background</b>. [file:2]</li>
+    </ul>
+
+    <h2>3. Distance Measures Between Pixels</h2>
+    <p>
+        Let \(p(x,y)\) and \(q(s,t)\) be two pixels. Your slides define three key distance measures: [file:2][web:8]
+    </p>
+
+    <h3>3.1 Euclidean Distance</h3>
+    <p>
+        The <b>Euclidean distance</b> between \(p\) and \(q\) is:
+    </p>
+    <p>
+        \[
+        D_E(p,q) = \sqrt{(x-s)^2 + (y-t)^2}
+        \]
+    </p>
+    <p>
+        This is the standard straight-line distance from analytic geometry. [file:2][web:8]
+    </p>
+
+    <h3>3.2 City-block Distance (D4)</h3>
+    <p>
+        The <b>city-block distance</b> (also called D4 or Manhattan distance) is defined as: [file:2]
+    </p>
+    <p>
+        \[
+        D_4(p,q) = |x-s| + |y-t|
+        \]
+    </p>
+    <p>
+        Interpretation:
+        It corresponds to the minimum number of steps needed to move from \(p\) to \(q\) using only
+        vertical and horizontal moves (4-adjacency). [file:2]
+    </p>
+
+    <h3>3.3 Chessboard Distance (D8)</h3>
+    <p>
+        The <b>chessboard distance</b> (D8) is defined as: [file:2]
+    </p>
+    <p>
+        \[
+        D_8(p,q) = \max(|x-s|,\ |y-t|)
+        \]
+    </p>
+    <p>
+        Interpretation:
+        It corresponds to the minimum number of steps needed if moves can be horizontal, vertical, or diagonal,
+        like the king’s moves in chess (8-adjacency). [file:2]
+    </p>
+
+    <h3>3.4 Relationship Between Distances and Neighbors</h3>
+    <ul>
+        <li>
+            Pixels with \(D_4 = 1\) from a given pixel are exactly its <b>4-neighbors</b>
+            (up, down, left, right). [file:2]
+        </li>
+        <li>
+            Pixels with \(D_8 = 1\) from a given pixel are exactly its <b>8-neighbors</b>
+            (4-neighbors plus diagonals). [file:2]
+        </li>
+    </ul>
+
+    <h3>3.5 Contours of Constant Distance</h3>
+    <p>
+        For a fixed center pixel \(p\): [file:2]
+    </p>
+    <ul>
+        <li>
+            The set of pixels with \(D_4 = 1\) forms a diamond of radius 1 (the 4-neighbors).
+        </li>
+        <li>
+            The set of pixels with \(D_4 = 2\) forms a larger diamond-shaped contour around the center.
+        </li>
+        <li>
+            The set of pixels with \(D_8 = 1\) forms a square of radius 1 (the 8-neighbors).
+        </li>
+        <li>
+            The set of pixels with \(D_8 = 2\) forms a larger square contour around the center.
+        </li>
+    </ul>
+
+    <h3>3.6 Dm Distance (m-distance)</h3>
+    <p>
+        The <b>Dm distance</b> between two pixels is defined as the length of the shortest <b>m-path</b>
+        between them. [file:2]
+    </p>
+    <ul>
+        <li>
+            It depends both on the geometric positions of the pixels and on their values, because adjacency
+            is defined only for pixels whose values belong to a specified set \(V\) (e.g., value = 1). [file:2]
+        </li>
+    </ul>
+    <p>
+        Example from slides: pixels \(p\), \(p_1\), \(p_2\), \(p_3\), \(p_4\) are arranged such that
+        \(p\), \(p_2\), \(p_4\) always have value 1, while \(p_1\) and \(p_3\) can be 0 or 1.
+        Only pixels with value 1 are considered neighbors. [file:2]
+    </p>
+    <ul>
+        <li>
+            Case 1: \(p_1 = 0\), \(p_3 = 0\).
+            Shortest path: \(p \rightarrow p_2 \rightarrow p_4\), length 2, so \(D_m = 2\). [file:2]
+        </li>
+        <li>
+            Case 2: \(p_1 = 1\), \(p_3 = 0\).
+            Shortest path: \(p \rightarrow p_1 \rightarrow p_2 \rightarrow p_4\), length 3, so \(D_m = 3\). [file:2]
+        </li>
+        <li>
+            Case 3: \(p_1 = 0\), \(p_3 = 1\).
+            Shortest path: \(p \rightarrow p_2 \rightarrow p_3 \rightarrow p_4\), length 3, so \(D_m = 3\). [file:2]
+        </li>
+        <li>
+            Case 4: \(p_1 = 1\), \(p_3 = 1\).
+            Shortest path: \(p \rightarrow p_1 \rightarrow p_2 \rightarrow p_3 \rightarrow p_4\), length 4, so \(D_m = 4\). [file:2]
+        </li>
+    </ul>
+
+    <h2>4. Image Segmentation – Core Concepts</h2>
+    <p>
+        Image segmentation is a sub-domain of computer vision and digital image processing that aims to group
+        similar pixels into regions or segments and assign each region a class label. [file:3]
+    </p>
+    <ul>
+        <li>
+            The image is represented digitally as pixels, so segmentation is equivalent to grouping pixels into sets
+            that correspond to meaningful objects or regions. [file:3]
+        </li>
+        <li>
+            Segmentation is an extension of image classification:
+            classification assigns a single label to the whole image,
+            while segmentation assigns a label to each pixel and localizes objects by outlining their boundaries. [file:3]
+        </li>
+        <li>
+            A <b>segment map</b> is an output image where each pixel’s value indicates the segment or class it belongs to. [file:3]
+        </li>
+    </ul>
+
+    <h2>5. Types of Image Segmentation Tasks</h2>
+
+    <h3>5.1 Semantic Segmentation</h3>
+    <ul>
+        <li>
+            Assigns each pixel to a <b>semantic class</b> such as road, building, car, pedestrian, etc. [file:3]
+        </li>
+        <li>
+            All objects of the same class share the same label; individual instances of that class are not distinguished. [file:3]
+        </li>
+        <li>
+            Example (from slides): in an image of a crowded street, semantic segmentation may label the entire crowd region
+            as “pedestrian” without separating each person. [file:3]
+        </li>
+    </ul>
+
+    <h3>5.2 Instance Segmentation</h3>
+    <ul>
+        <li>
+            Separates pixels into different <b>instances</b> of objects, even if they belong to the same semantic class. [file:3]
+        </li>
+        <li>
+            An instance segmentation algorithm can distinguish overlapping or very similar objects by their boundaries. [file:3]
+        </li>
+        <li>
+            In the strict wording of your slide, the algorithm may not attach a semantic class name; it simply outputs distinct regions for each instance. [file:3]
+        </li>
+        <li>
+            Example: in a crowded street, each person is segmented as a separate instance (person 1, person 2, etc.), even though they are all pedestrians. [file:3]
+        </li>
+    </ul>
+
+    <h3>5.3 Panoptic Segmentation</h3>
+    <ul>
+        <li>
+            Combines <b>semantic segmentation</b> and <b>instance segmentation</b>. [file:3]
+        </li>
+        <li>
+            Each object instance is segmented separately, and each instance is assigned a semantic class label. [file:3]
+        </li>
+        <li>
+            Panoptic segmentation is particularly useful in self-driving cars, where the system must understand
+            the full scene: roads, sidewalks, vehicles, pedestrians, etc., with both class identities and separate instances. [file:3]
+        </li>
+    </ul>
+
+    <h2>6. Traditional Image Segmentation Techniques</h2>
+
+    <h3>6.1 Thresholding</h3>
+    <ul>
+        <li>
+            One of the simplest segmentation methods; it converts a grayscale image into a binary image. [file:3]
+        </li>
+        <li>
+            Choose a threshold value \(T\). For each pixel:
+            <ul>
+                <li>Pixel value ≥ \(T\) → set to 1 (foreground/object).</li>
+                <li>Pixel value < \(T\) → set to 0 (background).</li>
+            </ul>
+            This process is called <b>binarization</b>. [file:3][file:1]
+        </li>
+        <li>
+            Works well when the difference in pixel values between foreground and background is large,
+            making it easy to choose an average threshold. [file:3]
+        </li>
+        <li>
+            Often used as a preprocessing step before contour detection algorithms that require binary input. [file:3]
+        </li>
+        <li>
+            Class note example: using \(T = 200\), “≥ 200 → 1 else → 0.” [file:1]
+        </li>
+    </ul>
+
+    <h3>6.2 Region-based Segmentation</h3>
+    <ul>
+        <li>
+            Algorithms search for similarities between adjacent pixels and group similar pixels into common regions. [file:3][file:1]
+        </li>
+        <li>
+            Typical <b>region growing</b> procedure:
+            <ul>
+                <li>Select initial seed pixels.</li>
+                <li>Check immediate neighbors and decide whether they are similar to the seed (based on intensity, color, etc.).</li>
+                <li>If similar, add them to the region; these new pixels become seeds.</li>
+                <li>Repeat until no more pixels can be added.</li>
+            </ul>
+            [file:3]
+        </li>
+        <li>
+            Produces large, homogeneous regions (similar color/texture), aligning with your notes:
+            “Region based → large continuous region of similar colour or texture, homogeneous and smooth.” [file:1]
+        </li>
+    </ul>
+
+    <h4>6.2.1 Watershed Algorithm</h4>
+    <ul>
+        <li>
+            A specific region-based method often used to separate overlapping or touching objects. [file:3][file:1]
+        </li>
+        <li>
+            Uses local maxima of a distance map and grows regions from these points under the constraint
+            that two different seeds should not merge into the same region. [file:3]
+        </li>
+        <li>
+            Particularly useful when there are frequent changes in color or texture and simple thresholding
+            would merge objects. [file:1]
+        </li>
+    </ul>
+
+    <h3>6.3 Edge-based Segmentation</h3>
+    <ul>
+        <li>
+            Also called <b>edge detection</b>; focuses on detecting and labeling edge pixels. [file:3]
+        </li>
+        <li>
+            From a segmentation perspective, we classify pixels into “edge” and “non-edge” classes. [file:3]
+        </li>
+        <li>
+            Edge detection uses filters (e.g., Sobel, derivatives) to estimate intensity gradients
+            in the x and y directions; strong gradients indicate edges. [file:3]
+        </li>
+        <li>
+            The Canny edge detector is a widely used algorithm that produces accurate edge maps. [file:3]
+        </li>
+        <li>
+            Your notes mention edge-based methods being useful for:
+            exact boundaries, sketch-like outlines, cracks, and line detection
+            (e.g., in autonomous driving: footpath–road boundaries, dividers). [file:1]
+        </li>
+    </ul>
+
+    <h3>6.4 Clustering-based Segmentation</h3>
+    <ul>
+        <li>
+            Modern classical methods often use clustering algorithms to group pixels based on feature similarity. [file:3]
+        </li>
+        <li>
+            <b>K-means clustering</b> is a common example:
+            <ul>
+                <li>Represents each pixel as a feature vector (e.g., its RGB values).</li>
+                <li>Clusters all pixels into \(k\) clusters.</li>
+                <li>Each cluster corresponds to a segment or region in the image. [file:3]</li>
+            </ul>
+        </li>
+        <li>
+            Unlike region-growing methods, clustering-based methods do not require seed points and consider
+            all pixels together when forming clusters. [file:3]
+        </li>
+        <li>
+            Your slides show an example of a source image and its segmented result after applying k-means. [file:3]
+        </li>
+    </ul>
+
+    <h2>7. Deep Learning-based Segmentation</h2>
+
+    <h3>7.1 Multi-channel Segment Maps</h3>
+    <ul>
+        <li>
+            For semantic segmentation, a deep learning model outputs an <b>n-channel</b> segment map,
+            where \(n\) is the number of classes. [file:3]
+        </li>
+        <li>
+            Each channel corresponds to a class and is typically a binary (or probabilistic) map:
+            ones (or high values) at pixels belonging to that class, zeros elsewhere. [file:3]
+        </li>
+        <li>
+            The ground truth for training is a single-channel integer image of the same size as the input,
+            where each pixel stores a value from 0 to \(n-1\) indicating its class index. [file:3]
+        </li>
+    </ul>
+
+    <h3>7.2 Convolutional Encoder–Decoder Architectures</h3>
+    <ul>
+        <li>
+            Encoder–decoder architectures, such as SegNet, use convolution and downsampling in the encoder
+            to compress the input into a lower-dimensional representation (bottleneck). [file:3]
+        </li>
+        <li>
+            The decoder upsamples this representation back to the original image size,
+            producing a segment map that highlights regions and groups them under their classes. [file:3]
+        </li>
+        <li>
+            A final activation function (e.g., sigmoid or softmax) constrains output values between 0 and 1,
+            interpreted as class probabilities per pixel. [file:3]
+        </li>
+    </ul>
+
+    <h2>8. Applications of Image Segmentation</h2>
+
+    <h3>8.1 Robotics and Machine Vision</h3>
+    <ul>
+        <li>
+            Instance segmentation for robotic grasping, where robots need to identify and isolate objects
+            they should pick up. [file:3]
+        </li>
+        <li>
+            Recycling object picking, where different materials must be separated based on shape and color. [file:3]
+        </li>
+        <li>
+            Autonomous navigation, where segmentation highlights obstacles, free space, and important scene elements. [file:3]
+        </li>
+    </ul>
+
+    <h3>8.2 Medical Imaging</h3>
+    <ul>
+        <li>
+            X-ray segmentation for identifying structures or abnormalities. [file:3]
+        </li>
+        <li>
+            CT scan organ segmentation to delineate organs for diagnosis or treatment planning. [file:3]
+        </li>
+        <li>
+            Dental instance segmentation for detecting teeth or dental structures. [file:3]
+        </li>
+        <li>
+            Digital pathology: segmentation of cells or tissues in microscopic images. [file:3]
+        </li>
+        <li>
+            Surgical video annotation: labeling organs, tools, and important regions in surgical footage. [file:3]
+        </li>
+    </ul>
+
+    <h3>8.3 Autonomous Vehicles and Aerial Imagery</h3>
+    <ul>
+        <li>
+            Panoptic segmentation in self-driving cars for complete scene understanding:
+            roads, sidewalks, vehicles, pedestrians, and other objects are segmented and labeled. [file:3]
+        </li>
+        <li>
+            Satellites and aerial imagery use segmentation to extract roads, buildings, trees, water bodies,
+            and other land cover classes from large-scale images. [file:3]
+        </li>
+    </ul>
+
+</body>
+</html>
